@@ -52,7 +52,12 @@ impl Config {
         }
         let query = args[1].clone();
         let file_path = args[2].clone();
-        let ignore_case = env::var("IGNORE_CASE").is_ok();
+
+        let ignore_case = if args.len() == 4 {
+            args[3].contains("-i")
+        } else {
+            env::var("IGNORE_CASE").is_ok()
+        };
 
         Ok(Config {
             query,
